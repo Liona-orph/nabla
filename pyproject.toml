@@ -1,0 +1,140 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "nabla"
+version = "0.1.0"
+description = "Reverse-mode automatic differentiation over NumPy arrays, small enough to read in an afternoon."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "The Nabla Authors" }]
+keywords = ["autodiff", "automatic-differentiation", "deep-learning", "numpy"]
+dependencies = ["numpy>=1.24"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://github.com/nabla-authors/nabla"
+Source = "https://github.com/nabla-authors/nabla"
+Changelog = "https://github.com/nabla-authors/nabla/blob/main/CHANGELOG.md"
+Architecture = "https://github.com/nabla-authors/nabla/blob/main/ARCHITECTURE.md"
+Issues = "https://github.com/nabla-authors/nabla/issues"
+
+[project.optional-dependencies]
+# Everything needed to reproduce the checks in the repository. Deliberately not
+# a runtime dependency: nabla itself imports nothing but numpy.
+dev = ["pytest>=8", "hypothesis>=6", "mypy>=1.10", "ruff>=0.5"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/nabla"]
+
+# --------------------------------------------------------------------------- #
+# ruff
+# --------------------------------------------------------------------------- #
+[tool.ruff]
+# 88 is the black default and it fights prose. Nabla's docstrings carry most of
+# the explanation, and at 88 columns a two-clause sentence wraps three times.
+line-length = 100
+src = ["src", "tests"]
+target-version = "py310"
+
+[tool.ruff.lint]
+select = [
+  "F",    # pyflakes: real bugs (unused names, undefined references)
+  "E",    # pycodestyle errors
+  "W",    # pycodestyle warnings
+  "I",    # import sorting; keeps the tensor <-> ops cycle visible at the top of each file
+  "N",    # pep8-naming
+  "D",    # pydocstyle: every public symbol in this package is meant to be read
+  "UP",   # pyupgrade
+  "B",    # bugbear: mutable defaults, loop-variable capture in closures (autodiff is closures)
+  "C4",   # comprehensions
+  "SIM",  # simplifications
+  "RET",  # return consistency
+  "PIE",  # misc lints
+  "PT",   # pytest style
+  "NPY",  # numpy-specific: catches np.random global-state use, which this package forbids
+  "RUF",  # ruff's own
+  "ANN",  # every signature is annotated; mypy --strict enforces the rest
+  "TRY",  # exception antipatterns
+  "EM",   # exception messages assigned to a name before raising (readable tracebacks)
+  "ARG",  # unused arguments
+  "PL",   # pylint subset
+  "PERF", # obvious performance traps
+]
+ignore = [
+  "D203",   # conflicts with D211; one blank line before a class docstring is not our style
+  "D213",   # conflicts with D212; summary goes on the first physical line
+  "D401",   # "imperative mood" flags accurate summaries like "True if ..."
+  "D105",   # a docstring on __add__ or __repr__ could only restate the method name
+  "D107",   # __init__ is documented by its class docstring, where the reader looks
+  "ANN401", # Any is the honest annotation for a numpy index expression
+  "PLR0913",# vjps and reductions legitimately take many keyword arguments
+  "PLR2004",# magic values in shape/axis arithmetic are the clearest form
+  "TRY003", # the long message is the point: it names the op, shape and index
+  "N803",   # numpy-style argument names (a, b, x, dx) are the domain's vocabulary
+  "N806",   # ditto for locals
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Tests name themselves: a docstring on `test_add_broadcasts_and_reduces` could
+# only restate the name, which is exactly what this repository's style forbids.
+"tests/*" = ["D100", "D101", "D102", "D103", "D104"]
+# The ops package deliberately shadows builtins (sum, max, min, abs, pow) so the
+# API reads like numpy. The shadowing is confined to these modules.
+"src/nabla/ops/*" = ["A001", "A002"]
+# Tensor's operators import their op inside the method body. nabla.ops needs
+# Tensor to build results and Tensor needs nabla.ops to implement `+`; one of the
+# two directions has to be deferred, and deferring it here keeps nabla.ops
+# importable on its own. See the comment above the operator block.
+"src/nabla/tensor.py" = ["PLC0415"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
+
+[tool.ruff.lint.flake8-pytest-style]
+fixture-parentheses = false
+
+[tool.ruff.format]
+# The docstring examples are executed by pytest --doctest-modules, so they are
+# code and should be formatted like code.
+docstring-code-format = true
+
+# --------------------------------------------------------------------------- #
+# mypy
+# --------------------------------------------------------------------------- #
+[tool.mypy]
+python_version = "3.10"
+files = ["src"]
+strict = true
+# numpy's stubs return Any from most arithmetic. Rather than switch the rule off
+# (which `mypy --strict` on the command line would override anyway), every
+# public function pins its result to an annotated local before returning.
+warn_unreachable = true
+enable_error_code = ["redundant-expr", "truthy-bool", "ignore-without-code"]
+
+# --------------------------------------------------------------------------- #
+# pytest
+# --------------------------------------------------------------------------- #
+[tool.pytest.ini_options]
+# src/nabla is in testpaths so the runnable examples in the docstrings are
+# executed on every run; a stale example is a documentation bug.
+testpaths = ["tests", "src/nabla"]
+addopts = "--strict-markers --strict-config --doctest-modules"
+# A numpy RuntimeWarning (overflow, invalid value, divide by zero) inside a test
+# is a finding, not noise. Tests that exercise a domain boundary opt out locally
+# with np.errstate.
+filterwarnings = ["error"]
