@@ -1,0 +1,33 @@
+# https://editorconfig.org
+# Kept in agreement with ruff's formatter, which is the arbiter for Python.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+[*.py]
+# Matches [tool.ruff] line-length in pyproject.toml. 88 fights prose, and the
+# docstrings in this package carry most of the explanation.
+max_line_length = 100
+
+[*.{yml,yaml,json,toml}]
+indent_size = 2
+
+[*.md]
+# Two trailing spaces are a hard line break in Markdown; trimming them silently
+# reflows a paragraph.
+trim_trailing_whitespace = false
+
+[Makefile]
+indent_style = tab
+
+[testdata/*.txt]
+# A fixture is a fixture. Reformatting it changes the corpus the examples train
+# on, and with it every number in their READMEs.
+trim_trailing_whitespace = false
+insert_final_newline = false
