@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/nabla-authors/nabla/security/advisories/new
+    about: Report privately through a security advisory, not a public issue. See SECURITY.md.
+  - name: Question about how something works
+    url: https://github.com/nabla-authors/nabla/discussions
+    about: >-
+      Ask in Discussions. Every public symbol has a docstring that explains why it
+      is the way it is, so a question is often also a report that a docstring is
+      not doing its job - say so and it will be fixed.
