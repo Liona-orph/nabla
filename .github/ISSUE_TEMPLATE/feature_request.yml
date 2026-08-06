@@ -1,0 +1,51 @@
+name: Feature request
+description: Propose an operation, a layer, or a capability.
+title: "feature: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Before writing: the README's "What this is not" section and the records
+        in `docs/adr/` list things that are absent on purpose - no GPU, no fused
+        kernels, no higher-order derivatives, no `einsum`, one runtime
+        dependency. A request for one of those is a request to supersede an ADR,
+        which is welcome, but it needs an argument against the recorded
+        reasoning rather than around it.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What you were trying to do, and what stopped you.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: The proposal
+      description: >-
+        For a new operation: the forward expression and the vjp. For a new
+        layer: which existing operations it would be built from.
+    validations:
+      required: true
+
+  - type: textarea
+    id: cost
+    attributes:
+      label: What it would cost
+      description: >-
+        Every addition costs something - code to audit, memory, a dependency, an
+        invariant. Naming the cost yourself makes the discussion shorter.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: invariants
+    attributes:
+      label: Invariants
+      options:
+        - label: This needs no runtime dependency beyond NumPy.
+        - label: Its gradients can be verified with `check_grad`.
+        - label: It does not require mutating a tensor buffer.

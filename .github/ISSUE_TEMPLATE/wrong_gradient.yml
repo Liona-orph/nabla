@@ -1,0 +1,63 @@
+name: Wrong gradient
+description: A vector-Jacobian product disagrees with a numerical derivative.
+title: "wrong gradient: "
+labels: ["bug", "autodiff"]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        This is the most important kind of bug this project can have, and the
+        most useful report is a failing `nabla.check_grad`. A wrong gradient is
+        silent: the forward pass keeps working, the loss keeps going down, and
+        only the answer is wrong.
+
+  - type: textarea
+    id: reproducer
+    attributes:
+      label: The failing check
+      description: >-
+        A `check_grad` call that fails, small enough to paste. Pass the function
+        unreduced - `lambda x: nb.softmax(x)`, not `lambda x: nb.softmax(x).sum()`
+        - because `check_grad` applies its own random output projection and
+        reducing first throws away the asymmetry that catches a transposed
+        gradient.
+      render: python
+      placeholder: |
+        import nabla as nb
+        import numpy as np
+
+        x = np.array([0.5, -1.5, 2.0])
+        print(nb.check_grad(lambda t: nb.some_op(t), x, raise_on_failure=False))
+    validations:
+      required: true
+
+  - type: textarea
+    id: report
+    attributes:
+      label: The GradCheckReport
+      description: >-
+        Paste it verbatim. It names the argument, the index, the analytic value
+        and the numerical one, which between them usually identify the mistake.
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: kinks
+    attributes:
+      label: Is the point differentiable?
+      description: >-
+        `check_grad` cannot check a kink. `relu` at 0, `max` at a tie and `abs`
+        at 0 have a different one-sided derivative on each side, and the
+        difference quotient returns their average. If your input is near one of
+        those, say so - the answer may be that the test needs different inputs.
+    validations:
+      required: false
+
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: 'Output of: python -c "import numpy, nabla; print(numpy.__version__, nabla.__version__)"'
+    validations:
+      required: true

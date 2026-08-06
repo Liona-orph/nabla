@@ -1,0 +1,46 @@
+name: Bug report
+description: Something else does not behave as documented.
+title: "bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        If a *gradient* is wrong, use the "Wrong gradient" template instead - it
+        asks for the one thing that makes such a report actionable.
+
+  - type: textarea
+    id: reproducer
+    attributes:
+      label: What you ran
+      description: The smallest program that shows the problem.
+      render: python
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened
+      description: Output or traceback, verbatim.
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected, and why
+      description: >-
+        If a docstring or a README said otherwise, quote it. A docstring that
+        promises the wrong thing is itself the bug.
+    validations:
+      required: true
+
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: 'Output of: python -c "import sys, numpy, nabla; print(sys.version, numpy.__version__, nabla.__version__)"'
+    validations:
+      required: true

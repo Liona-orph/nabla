@@ -1,0 +1,38 @@
+# Dependabot keeps the pinned action SHAs in .github/workflows/ current.
+#
+# Only two ecosystems are watched, and that is not an oversight: nabla's single
+# runtime dependency is `numpy>=1.24`, an open lower bound that no lockfile
+# pins, so there is nothing for Dependabot to bump there. The development
+# extras are open bounds for the same reason - CI installs the current release
+# of ruff and mypy on every run, which is the fastest way to find out that a new
+# rule has landed.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "ci"
+    labels:
+      - dependencies
+      - github-actions
+    groups:
+      # One pull request a month rather than one per action. Action bumps are
+      # reviewed by reading the diff of the pinned SHA, and doing that once for
+      # three actions is the same work as doing it three times.
+      actions:
+        patterns:
+          - "*"
+
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"
+    labels:
+      - dependencies
+      - python
