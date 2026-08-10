@@ -11,7 +11,7 @@ requires-python = ">=3.10"
 license = { file = "LICENSE" }
 authors = [{ name = "The Nabla Authors" }]
 keywords = ["autodiff", "automatic-differentiation", "deep-learning", "numpy"]
-dependencies = ["numpy>=1.24"]
+dependencies = ["numpy>=2.2.6"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Intended Audience :: Developers",
