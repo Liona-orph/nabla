@@ -36,7 +36,7 @@ Issues = "https://github.com/nabla-authors/nabla/issues"
 [project.optional-dependencies]
 # Everything needed to reproduce the checks in the repository. Deliberately not
 # a runtime dependency: nabla itself imports nothing but numpy.
-dev = ["pytest>=8", "hypothesis>=6", "mypy>=1.10", "ruff>=0.5"]
+dev = ["pytest>=8", "hypothesis>=6", "mypy>=2.3.0", "ruff>=0.5"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/nabla"]
