@@ -3,23 +3,23 @@
 # GitHub reads this file from the repository root, .github/ or docs/. It lives
 # at the root here so that it is visible to anyone browsing the tree rather than
 # hidden in a dot directory.
-*                       @nabla-authors/maintainers
+*                       @Liona-orph
 
 # The autodiff core is the part of this package that everything else trusts.
 # A wrong vjp is silent, so these files get a second, narrower set of eyes.
-/src/nabla/tensor.py    @nabla-authors/autodiff
-/src/nabla/grad.py      @nabla-authors/autodiff
-/src/nabla/ops/         @nabla-authors/autodiff
+/src/nabla/tensor.py    @Liona-orph
+/src/nabla/grad.py      @Liona-orph
+/src/nabla/ops/         @Liona-orph
 
 # The decisions, and the things that are true because of them. A change here is
 # a change of direction, not an implementation detail.
-/docs/adr/              @nabla-authors/maintainers
-/ARCHITECTURE.md        @nabla-authors/maintainers
-/LICENSE                @nabla-authors/maintainers
-/SECURITY.md            @nabla-authors/maintainers
+/docs/adr/              @Liona-orph
+/ARCHITECTURE.md        @Liona-orph
+/LICENSE                @Liona-orph
+/SECURITY.md            @Liona-orph
 
 # The numbers in these files are measurements. Changing one means re-running the
 # thing that produced it.
-/README.md              @nabla-authors/maintainers
-/examples/              @nabla-authors/maintainers
-/benchmarks/            @nabla-authors/maintainers
+/README.md              @Liona-orph
+/examples/              @Liona-orph
+/benchmarks/            @Liona-orph

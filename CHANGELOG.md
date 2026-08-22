@@ -102,5 +102,5 @@ No GPU, no fused kernels, no higher-order derivatives, no `einsum`, no
 convolutions or recurrence. The graph is not freed by `backward()`. GELU is the
 tanh approximation. See the "What this is not" section of the README.
 
-[Unreleased]: https://github.com/nabla-authors/nabla/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/nabla-authors/nabla/releases/tag/v0.1.0
+[Unreleased]: https://github.com/Liona-orph/nabla/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/Liona-orph/nabla/releases/tag/v0.1.0

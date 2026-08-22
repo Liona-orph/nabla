@@ -7,7 +7,7 @@ the checklist.
 ## The short version
 
 ```bash
-git clone https://github.com/nabla-authors/nabla
+git clone https://github.com/Liona-orph/nabla
 cd nabla
 python -m venv .venv && source .venv/bin/activate
 make install

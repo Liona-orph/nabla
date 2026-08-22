@@ -4,7 +4,7 @@ A deep learning framework built from first principles on NumPy: reverse-mode
 automatic differentiation, layers, optimisers and a training loop, small enough
 to read end to end in an afternoon.
 
-[![CI](https://github.com/nabla-authors/nabla/actions/workflows/ci.yml/badge.svg)](https://github.com/nabla-authors/nabla/actions/workflows/ci.yml)
+[![CI](https://github.com/Liona-orph/nabla/actions/workflows/ci.yml/badge.svg)](https://github.com/Liona-orph/nabla/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
 [![Checked with mypy --strict](https://img.shields.io/badge/mypy-strict-blue)](https://mypy-lang.org/)

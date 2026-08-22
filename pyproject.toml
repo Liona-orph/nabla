@@ -9,7 +9,7 @@ description = "Reverse-mode automatic differentiation over NumPy arrays, small e
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
-authors = [{ name = "The Nabla Authors" }]
+authors = [{ name = "Liona-Orph" }]
 keywords = ["autodiff", "automatic-differentiation", "deep-learning", "numpy"]
 dependencies = ["numpy>=1.24"]
 classifiers = [
@@ -27,16 +27,23 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/nabla-authors/nabla"
-Source = "https://github.com/nabla-authors/nabla"
-Changelog = "https://github.com/nabla-authors/nabla/blob/main/CHANGELOG.md"
-Architecture = "https://github.com/nabla-authors/nabla/blob/main/ARCHITECTURE.md"
-Issues = "https://github.com/nabla-authors/nabla/issues"
+Homepage = "https://github.com/Liona-orph/nabla"
+Source = "https://github.com/Liona-orph/nabla"
+Changelog = "https://github.com/Liona-orph/nabla/blob/main/CHANGELOG.md"
+Architecture = "https://github.com/Liona-orph/nabla/blob/main/ARCHITECTURE.md"
+Issues = "https://github.com/Liona-orph/nabla/issues"
 
 [project.optional-dependencies]
 # Everything needed to reproduce the checks in the repository. Deliberately not
 # a runtime dependency: nabla itself imports nothing but numpy.
-dev = ["pytest>=8", "hypothesis>=6", "mypy>=1.10", "ruff>=0.5"]
+dev = [
+  "numpy>=1.24,<2; python_version < '3.11'",
+  "numpy>=1.24,<2.4; python_version >= '3.11'",
+  "pytest>=8",
+  "hypothesis>=6",
+  "mypy>=1.10",
+  "ruff>=0.5",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/nabla"]
